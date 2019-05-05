@@ -1,0 +1,23 @@
+{
+  "name": "feedreadertester",
+  "version": "1.0.0",
+  "description": "In this project you are given a web-based application that reads RSS feeds. The original developer of this application clearly saw the value in testing, they've already included [Jasmine](http://jasmine.github.io/) and even started writing their first test suite! Unfortunately, they decided to move on to start their own company and we're now left with an application with an incomplete test suite. That's where you come in.",
+  "main": "\u001b[A\u001b[C\u001b[B\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[B\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[D",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MewoArgenta/FeedReaderTester.git"
+  },
+  "author": "Wouter Van Meel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MewoArgenta/FeedReaderTester/issues"
+  },
+  "homepage": "https://github.com/MewoArgenta/FeedReaderTester#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "jasmine": "^3.4.0"
+  }
+}
