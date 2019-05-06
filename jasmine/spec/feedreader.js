@@ -8,6 +8,8 @@
  * since some of these tests may require DOM elements. We want
  * to ensure they don't run until the DOM is ready.
  */
+
+
 $(function() {
     /* This is our first test suite - a test suite just contains
     * a related set of tests. This suite is all about the RSS
@@ -44,7 +46,7 @@ $(function() {
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
-                  it ('allFeeds objects have name defined', function() {
+        it ('allFeeds objects have name defined', function() {
             allFeeds.forEach(function (element){
                 expect(element.name).toBeDefined();
                 expect(element.name).not.toBe('')
@@ -54,19 +56,57 @@ $(function() {
     });
 
 
+
+
     /* TODO: Write a new test suite named "The menu" */
+    describe('The menu', function() {
 
         /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
+         const menu = document.getElementsByTagName('body')[0];
+
+         it ('menu element is hidden', function() {
+            expect(menu.className).toBe('menu-hidden')
+         })
+
+
 
          /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
+
+        beforeEach (function(done) {
+
+            const burgerSymbol = document.getElementsByClassName('icon-list')[0];
+            //when the document is loaded the menu should be hidden
+            let menuShouldBehidden = true;
+
+            //this function will be called when the burger icon is clicked on
+            burgerSymbol.addEventListener('click', function() {
+
+                // wait what if the menu should be hidden, we are going to unhide it and vice versa?
+                // indeed because launching this event will show the menu and clicking on the burger again will hide the menu.
+                if (menushouldbehidden) {menushouldbehidden = false}
+                if (!menuShouldBehidden) {menushouldbehidden = true}
+                done();
+            });
+        });
+
+        it ('menu displays and hides again after clicking burger symbol', function(done) {
+        if (menuShouldBehidden) {
+                expect(menu.className).toBe('menu-hidden')
+            }
+        if (!menuShouldBehidden) {
+                expect(menu.className).toBe('')
+            }
+        done()
+        })
+    });
 
     /* TODO: Write a new test suite named "Initial Entries" */
 
