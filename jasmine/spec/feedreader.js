@@ -93,6 +93,11 @@ $(function() {
     /* TODO: Write a new test suite named "Initial Entries" */
     describe ('Initial Entries', function() {
 
+        beforeEach(function(done) {
+            loadFeed(0, done);
+        });
+
+
 
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
@@ -100,17 +105,37 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
+        it('loadFeed results in at least one element', function(done){
+            const entryElements = document.getElementsByClassName('entry-link');
+            expect(entryElements.length).toBeGreaterThan(0);
+            done();
+        })
+    })
 
-        
+    /* TODO: Write a new test suite named "New Feed Selection" */
+    describe ('New Feed Selection', function() {
 
-        /* TODO: Write a new test suite named "New Feed Selection" */
+    /* TODO: Write a test that ensures when a new feed is loaded
+     * by the loadFeed function that the content actually changes.
+     * Remember, loadFeed() is asynchronous.
+     */
 
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
+        beforeEach(function(done) {
+            loadFeed(0, done)
+        });
 
+        it ('when a new feed is loaded, the content changes', function(done) {
+            const feedAfter = document.getElementsByClassName('feed');
+            console.log(feedAfter);
+            let contentChanged = true;
+            if (feedBefore===feedAfter) {contentChanged = false};
+            expect(contentChanged).toBeTruthy();
+            done();
+        })
 
     })
+
+
+
 
 }());
