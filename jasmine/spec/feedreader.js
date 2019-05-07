@@ -80,35 +80,19 @@ $(function() {
           * clicked and does it hide when clicked again.
           */
 
-        beforeEach (function(done) {
+        const menuIcon = document.getElementsByClassName('icon-list')[0];
 
-            const burgerSymbol = document.getElementsByClassName('icon-list')[0];
-            //when the document is loaded the menu should be hidden
-            let menuShouldBehidden = true;
-
-            //this function will be called when the burger icon is clicked on
-            burgerSymbol.addEventListener('click', function() {
-
-                // wait what if the menu should be hidden, we are going to unhide it and vice versa?
-                // indeed because launching this event will show the menu and clicking on the burger again will hide the menu.
-                if (menushouldbehidden) {menushouldbehidden = false}
-                if (!menuShouldBehidden) {menushouldbehidden = true}
-                done();
-            });
-        });
-
-        it ('menu displays and hides again after clicking burger symbol', function(done) {
-        if (menuShouldBehidden) {
-                expect(menu.className).toBe('menu-hidden')
-            }
-        if (!menuShouldBehidden) {
-                expect(menu.className).toBe('')
-            }
-        done()
+        it ('menu display toggles after clicking menu-icon', function() {
+            menuIcon.click();
+            expect(menu.className).toBe('');
+            menuIcon.click();
+            expect(menu.className).toBe('menu-hidden');
         })
     });
 
     /* TODO: Write a new test suite named "Initial Entries" */
+    describe ('Initial Entries', function() {
+
 
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
@@ -117,10 +101,16 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
 
-    /* TODO: Write a new test suite named "New Feed Selection" */
+        
+
+        /* TODO: Write a new test suite named "New Feed Selection" */
 
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+
+
+    })
+
 }());
