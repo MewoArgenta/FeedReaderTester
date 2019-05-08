@@ -131,31 +131,34 @@ $(function() {
      * Remember, loadFeed() is asynchronous.
      */
 
-        function loadFeedProm(id) {
-            return new Promise((resolve, reject) => {
-               loadFeed(id, resolve);
-            });
-        }
+    function getLoadFeed(id, cb) {
+           loadFeed(id, done);
+           function done() {
+            cb()
+           }
+       }
 
         it ('when a new feed is loaded, the content changes', async function(done) {
-            try {
-                await loadFeedProm(0);
-            } catch(err) {
-                console.error(err);
+
+            let feedBefore;
+            let feedAfter;
+
+            getLoadFeed (0, getLoadFeed1);
+            function getLoadFeed1() {
+                feedBefore = document.getElementsByClassName('entry-link')[0].getElementsByTagName('h2')[0];
+                getLoadFeed (1, getLoadFeed2);
             }
 
-            const feedBefore = document.getElementsByClassName('entry-link')[0].getElementsByTagName('h2')[0];
-
-            try {
-                await loadFeedProm(1);
-            } catch(err) {
-                console.error(err);
+            function getLoadFeed2() {
+                feedAfter = document.getElementsByClassName('entry-link')[0].getElementsByTagName('h2')[0];
+                expectCall();
             }
 
-            const feedAfter = document.getElementsByClassName('entry-link')[0].getElementsByTagName('h2')[0];
-
-            expect(feedBefore !== feedAfter).toBeTruthy();
-            done();
+            function expectCall() {
+                console.log(feedBefore, feedAfter);
+                expect(feedBefore !== feedAfter).toBeTruthy();
+                done()
+            }
         })
 
     })
