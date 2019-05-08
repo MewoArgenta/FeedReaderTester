@@ -90,6 +90,11 @@ $(function() {
         })
     });
 
+
+    // I want to declare this variable outside the scope of the last testfunction so it can be modified by the function above
+    // because in this function we loadfeed 0 and in below we loadfeed 1
+    let feedBefore;
+
     /* TODO: Write a new test suite named "Initial Entries" */
     describe ('Initial Entries', function() {
 
@@ -106,30 +111,50 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
         it('loadFeed results in at least one element', function(done){
+
+            // i dont need feedbefore for this test but for the next one
+            feedBefore = document.getElementsByClassName('entry-link')[0].getElementsByTagName('h2')[0];
+
             const entryElements = document.getElementsByClassName('entry-link');
             expect(entryElements.length).toBeGreaterThan(0);
             done();
         })
     })
 
+
+
     /* TODO: Write a new test suite named "New Feed Selection" */
-    describe ('New Feed Selection', function() {
+   describe ('New Feed Selection', function() {
 
     /* TODO: Write a test that ensures when a new feed is loaded
      * by the loadFeed function that the content actually changes.
      * Remember, loadFeed() is asynchronous.
      */
 
-        beforeEach(function(done) {
-            loadFeed(0, done)
-        });
+        function loadFeedProm(id) {
+            return new Promise((resolve, reject) => {
+               loadFeed(id, resolve);
+            });
+        }
 
-        it ('when a new feed is loaded, the content changes', function(done) {
-            const feedAfter = document.getElementsByClassName('feed');
-            console.log(feedAfter);
-            let contentChanged = true;
-            if (feedBefore===feedAfter) {contentChanged = false};
-            expect(contentChanged).toBeTruthy();
+        it ('when a new feed is loaded, the content changes', async function(done) {
+            try {
+                await loadFeedProm(0);
+            } catch(err) {
+                console.error(err);
+            }
+
+            const feedBefore = document.getElementsByClassName('entry-link')[0].getElementsByTagName('h2')[0];
+
+            try {
+                await loadFeedProm(1);
+            } catch(err) {
+                console.error(err);
+            }
+
+            const feedAfter = document.getElementsByClassName('entry-link')[0].getElementsByTagName('h2')[0];
+
+            expect(feedBefore !== feedAfter).toBeTruthy();
             done();
         })
 
