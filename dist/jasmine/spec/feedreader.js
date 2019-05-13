@@ -60,10 +60,10 @@ $(function() {
         /* This test ensures the menu element is
          * hidden by default.
          */
-         const menu = document.getElementsByTagName('body')[0];
+         let menu = $("body");
 
          it ('menu element is hidden', function() {
-            expect(menu.className).toBe('menu-hidden')
+             expect(menu.hasClass('menu-hidden')).toBeTruthy()
          })
 
 
@@ -71,14 +71,13 @@ $(function() {
          /* This test ensures that the menu changes
           * visibility when the menu icon is clicked and hides when clicked again.
           */
-
         const menuIcon = document.getElementsByClassName('icon-list')[0];
 
         it ('menu display toggles after clicking menu-icon', function() {
             menuIcon.click();
-            expect(menu.className).toBe('');
+            expect(menu.hasClass('menu-hidden')).toBeFalsy();
             menuIcon.click();
-            expect(menu.className).toBe('menu-hidden');
+            expect(menu.hasClass('menu-hidden')).toBeTruthy();
         })
     });
 
@@ -99,8 +98,8 @@ $(function() {
          */
         it('loadFeed results in at least one element', function(done){
 
-            const entryElements = document.getElementsByClassName('entry-link');
-            expect(entryElements.length).toBeGreaterThan(0);
+            const feed = document.getElementsByClassName('feed')[0];
+            expect(feed.children.length).toBeGreaterThan(0);
             done();
         })
     })
@@ -114,39 +113,29 @@ $(function() {
      * by the loadFeed function that the content actually changes.
      */
 
-    function getLoadFeed(id, cb) {
-           loadFeed(id, done);
-           function done() {
-            cb()
-           }
-       }
-
         it ('when a new feed is loaded, the content changes', async function(done) {
 
             let feedBefore;
             let feedAfter;
 
-            getLoadFeed (0, getLoadFeed1);
-            function getLoadFeed1() {
-                feedBefore = document.getElementsByClassName('entry-link')[0].getElementsByTagName('h2')[0];
-                getLoadFeed (1, getLoadFeed2);
-            }
+            (function() {
+                loadFeed(0, firstLoadDone);
+                function firstLoadDone() {
+                    feedBefore = document.getElementsByClassName('entry-link')[0].getElementsByTagName('h2')[0];
+                    loadFeed(1, secondLoadDone)
+                    function secondLoadDone() {
+                        feedAfter = document.getElementsByClassName('entry-link')[0].getElementsByTagName('h2')[0];
+                        finished();
+                    }
+                }
+            })();
 
-            function getLoadFeed2() {
-                feedAfter = document.getElementsByClassName('entry-link')[0].getElementsByTagName('h2')[0];
-                expectCall();
-            }
-
-            function expectCall() {
-                console.log(feedBefore, feedAfter);
+            function finished() {
                 expect(feedBefore !== feedAfter).toBeTruthy();
                 done()
             }
         })
 
     })
-
-
-
 
 }());

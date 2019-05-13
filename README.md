@@ -23,6 +23,3 @@ Be sure you installed these before running the program.
 
 3. install jasmine local and global: https://www.npmjs.com/package/jasmine
 
-
-
-When you're all finished, write a `README` file detailing all steps required to successfully run the application. If you have added additional tests, provide documentation for what these future features are and what the tests are checking for.
