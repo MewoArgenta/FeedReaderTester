@@ -63,7 +63,7 @@ $(function() {
          let menu = $("body");
 
          it ('menu element is hidden', function() {
-             expect(menu.hasClass('menu-hidden')).toBeTruthy()
+             expect(menu.hasClass('menu-hidden')).toBe(true)
          })
 
 
@@ -75,9 +75,9 @@ $(function() {
 
         it ('menu display toggles after clicking menu-icon', function() {
             menuIcon.click();
-            expect(menu.hasClass('menu-hidden')).toBeFalsy();
+            expect(menu.hasClass('menu-hidden')).toBe(false);
             menuIcon.click();
-            expect(menu.hasClass('menu-hidden')).toBeTruthy();
+            expect(menu.hasClass('menu-hidden')).toBe(true);
         })
     });
 
@@ -99,7 +99,8 @@ $(function() {
         it('loadFeed results in at least one element', function(done){
 
             const feed = document.getElementsByClassName('feed')[0];
-            expect(feed.children.length).toBeGreaterThan(0);
+            const initialEntries = feed.getElementsByClassName('entry');
+            expect(initialEntries.length).toBeGreaterThan(0);
             done();
         })
     })
@@ -131,7 +132,7 @@ $(function() {
             })();
 
             function finished() {
-                expect(feedBefore !== feedAfter).toBeTruthy();
+                expect(feedBefore !== feedAfter).toBe(true);
                 done()
             }
         })
